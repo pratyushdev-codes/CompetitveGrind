@@ -35,6 +35,31 @@
 //  and 𝑎𝑖⋅𝑎𝑗=𝑖+𝑗
 // .
 
+// Example
+// InputCopy
+// 3
+// 2
+// 3 1
+// 3
+// 6 1 5
+// 5
+// 3 1 5 9 2
+// OutputCopy
+// 1
+// 1
+// 3
+// Note
+// For the first test case, the only pair that satisfies the constraints is (1,2)
+// , as 𝑎1⋅𝑎2=1+2=3
+
+// For the second test case, the only pair that satisfies the constraints is (2,3)
+// .
+
+// For the third test case, the pairs that satisfy the constraints are (1,2)
+// , (1,5)
+// , and (2,3)
+// .
+
 
 
 import java.util.*;
@@ -42,36 +67,38 @@ import java.util.*;
 public class pleasantPair {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int t = sc.nextInt();  // number of test cases
+        int t = sc.nextInt();
+
         while (t-- > 0) {
             int n = sc.nextInt();
-            int[] arr = new int[n + 1]; // 1-based indexing
-            Map<Integer, Integer> valueToIndex = new HashMap<>();
-
+            int[] a = new int[n + 1];  // 1-based indexing
             for (int i = 1; i <= n; i++) {
-                arr[i] = sc.nextInt();
-                valueToIndex.put(arr[i], i);
+                a[i] = sc.nextInt();
+            }
+
+            // Store value to index mapping
+            Map<Integer, Integer> valueToIndex = new HashMap<>();
+            for (int i = 1; i <= n; i++) {
+                valueToIndex.put(a[i], i);
             }
 
             int count = 0;
-            // Loop for all possible products <= 2n
-            for (int i = 1; i <= 2 * n; i++) {
-                for (int x = 1; x * x < i; x++) {
-                    if (i % x == 0) {
-                        int y = i / x;
-                        if (x == y) continue;
-                        if (valueToIndex.containsKey(x) && valueToIndex.containsKey(y)) {
-                            int idx1 = valueToIndex.get(x);
-                            int idx2 = valueToIndex.get(y);
-                            if (idx1 < idx2 && x * y == idx1 + idx2) {
-                                count++;
-                            }
+
+            // For each i < j, we check if a[i] * a[j] == i + j
+            // Instead, fix the product and check if it can be formed
+            for (int i = 1; i <= n; i++) {
+                for (int k = 1; k * a[i] <= 2 * n; k++) {
+                    int prod = k * a[i];
+                    if (valueToIndex.containsKey(k)) {
+                        int j = valueToIndex.get(k);
+                        if (i < j && a[i] * a[j] == i + j) {
+                            count++;
                         }
                     }
                 }
             }
+
             System.out.println(count);
         }
-        sc.close();
     }
 }
