@@ -19,6 +19,14 @@ public class BlackandWhite {
             }
 
             int min_cells = Integer.MAX_VALUE;
+            // we will travels the whole string in a segments of sizes K and then keep findng the min number of whites occuring in them , the less the number of whites the less the number of conversions required to be done in order to make K conequtive K sequence
+            for(int i =0 ; i <=n-k ; i++){
+                int diff = prefix[i+k]- prefix[i];
+                min_cells = Math.min(min_cells, diff);
+                        }
+                                System.out.println(min_cells);
         }
+
+
     }
 }
