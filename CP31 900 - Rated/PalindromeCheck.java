@@ -10,7 +10,7 @@
 // 👉 After removing exactly k characters, can the remaining string be rearranged to form a palindrome?
 
 // 🔹 Reminder: When can a string be rearranged into a palindrome?
-
+    
 // A palindrome has mirrored halves.
 
 // So:
